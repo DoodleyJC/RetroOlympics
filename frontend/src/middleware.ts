@@ -1,10 +1,11 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest){
-    const isLoggedIn = request.cookies.get("isLoggedIn");
+    const isLoggedIn = cookies().get("isLoggedIn")
 
-    if(isLoggedIn && isLoggedIn.value=="0"){
+    if(!isLoggedIn || isLoggedIn.value=="0"){
         return Response.redirect(new URL("/login", request.nextUrl))
     }
 }
